@@ -40,8 +40,21 @@
 		5. Display stats - done
 		6. Search for bugs - done
 		7. Sort the bugs - done
-		8. Improvise the bug display
+		8. Improvise the bug display - done
 		9. Persist the bugs in the localstorage
+		window.localStorage
+		===================
+			- key/value store
+			- value should be a string
+			- use angular.toJson() and angular.fromJson() to serialize and deserialize 
+			- apis
+				* setItem(key, value)
+				* getItem(key) //=> value
+				* removeItem(key)
+				* key(index) //key at index
+				* clear()
+				* length
+
 		10. Display 'createdAt' for each bug
 		11. Persist the bugs in the server
 		12. Categorize the bugs
@@ -54,6 +67,7 @@
 
 		bugTrackerApp.factory('Bug', function(){
 			function Bug(defaults){
+				this.id = defaults.id || 0;
 				this.name = defaults.name || '';
 				this.isClosed = defaults.isClosed || false;
 			}
@@ -66,26 +80,37 @@
 
 
 		bugTrackerApp.controller("bugsController", function($scope, Bug){
-			$scope.bugs = [
-				new Bug({ name : "Server communication error", isClosed : false}),
-				new Bug({ name : "Data validation failure", isClosed : true}),
-				new Bug({ name : "User authentication wrong", isClosed : false}),
-			];
+			var maxBugId = 0,
+				storage = window.localStorage;
+
+			$scope.bugs = [];
+
+			for(var i=0; i<storage.length; i++){
+				var key = storage.key(i),
+					dataAsString = storage.getItem(key),
+					dataObj = angular.fromJson(dataAsString),
+					bug = new Bug(dataObj);
+				$scope.bugs.push(bug);
+			}
 			
 			$scope.addNew = function(newBug){
-				var bug = new Bug({name : newBug});
+				var bug = new Bug({id : ++maxBugId, name : newBug});
+				storage.setItem(bug.id, angular.toJson(bug));
 				$scope.bugs.push(bug);
 			};
 
 			$scope.toggleBug = function(bug){
-				//bug.isClosed = !bug.isClosed;
+				
 				bug.toggle();
+				storage.setItem(bug.id, angular.toJson(bug));
 			};
 
 			$scope.removeClosed = function(){
 				for(var i=$scope.bugs.length-1; i>=0; i--)
-					if ($scope.bugs[i].isClosed)
+					if ($scope.bugs[i].isClosed){
+						storage.removeItem(bug.id);
 						$scope.bugs.splice(i,1);
+					}
 			};
 
 			
