@@ -102,7 +102,7 @@
 			var builtinFilterFilter = $filter('filter');
 			return function(bugs){
 				return builtinFilterFilter(bugs, {isClosed : true}).length;
-			}
+			}  
 		})
 
 		bugTrackerApp.value("defaultTrimLength", 30);
