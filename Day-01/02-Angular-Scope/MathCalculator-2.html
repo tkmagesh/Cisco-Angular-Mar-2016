@@ -28,16 +28,23 @@
 
 		angular.module("ng").run(function($rootScope){
 			$rootScope.calculator = new MathCalculator();
+			$rootScope.operation = '';
+			$rootScope.calculate = function(){
+				$rootScope.calculator[$rootScope.operation]();
+			}
 		});
 	</script>
 </head>
 <body ng-app>
 	<input type="number" ng-model="calculator.number1">
 	<input type="number" ng-model="calculator.number2">
-	<input type="button" value="Add" ng-click="calculator.add()">
-	<input type="button" value="Subtract" ng-click="calculator.subtract()">
-	<input type="button" value="Multiply" ng-click="calculator.multiply()">
-	<input type="button" value="Divide" ng-click="calculator.divide()">
+	<select ng-model="operation">
+		<option value="add">Add</option>
+		<option value="subtract">Subtract</option>
+		<option value="multiply">Multiply</option>
+		<option value="divide">Divide</option>
+	</select>
+	<input type="button" value="Calculate" ng-click="calculate()">
 	<div ng-bind="calculator.result">[Result]</div>
 </body>
 </html>

@@ -58,6 +58,7 @@
 		angular
 			.module("ng")
 			.run(function($rootScope){
+				console.log(arguments);
 				$rootScope.calculator = new SalaryCalculator();
 			})
 	</script>
@@ -88,7 +89,7 @@
 			<input type="button" value="Reset" ng-click="calculator.reset()">
 		</div>
 		<div class="field">
-			<div id="divResult" ng-bind="calculator.salary">[Salary]</div>
+			<div id="divResult" ng-bind="calculator.salary | currency:'Rs'">[Salary]</div>
 		</div>
 	</div>
 </body>
