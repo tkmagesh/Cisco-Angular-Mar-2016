@@ -77,15 +77,25 @@
 		var myApp = angular.module("myApp", ["ng"]);
 		myApp.run(function($rootScope){
 			$rootScope.appName = 'Salary Calculator App'
+			$rootScope.result = 0;
+			$rootScope.setResult = function(value){
+				$rootScope.result = value;
+			};
 		})
 		myApp.controller('calculatorController', function($scope){
 			$scope.calculator = new SalaryCalculator();
+			$scope.calculate = function(){
+				$scope.calculator.calculate();
+				$scope.setResult($scope.calculator.salary);
+			};
 		});
 		myApp.controller('mathCalculatorController', function($scope){
 			$scope.calculator = new MathCalculator();
 			$scope.operation = '';
 			$scope.calculate = function(){
 				$scope.calculator[$scope.operation]();
+				$scope.setResult($scope.calculator.result);
+
 			}
 		})
 	</script>
@@ -112,7 +122,7 @@
 			<span id="spanTax" ng-bind="calculator.tax">[Tax]</span>
 		</div>
 		<div class="field">
-			<input type="button" value="Calculate" id="btnCalculate" ng-click="calculator.calculate()">
+			<input type="button" value="Calculate" id="btnCalculate" ng-click="calculate()">
 			<input type="button" value="Reset" ng-click="calculator.reset()">
 		</div>
 		<div class="field">
@@ -132,5 +142,6 @@
 		<input type="button" value="Calculate" ng-click="calculate()">
 		<div ng-bind="calculator.result">[Result]</div>
 	</div>
+	<div><h3>The latest calculated result = {{result}}</h3></div>
 </body>
 </html>
