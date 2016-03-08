@@ -33,8 +33,8 @@
 	<script src="angular.min.js"></script>
 	<script>
 		/*
-		1. List the bugs
-		2. Add a new bug
+		1. List the bugs - done
+		2. Add a new bug - done
 		3. Toggle the closed status of the bug
 		4. Remove closed bugs
 		5. Display stats
@@ -48,37 +48,56 @@
 		*/
 
 	</script>
+	<script>
+		var bugTrackerApp = angular.module("bugTrackerApp", ["ng"]);
+		bugTrackerApp.controller("bugsController", function($scope){
+			$scope.bugs = [
+				{ name : "Server communication error", isClosed : false},
+				{ name : "Data validation failure", isClosed : false},
+				{ name : "User authentication wrong", isClosed : false},
+			];
+			
+			$scope.addNew = function(newBug){
+				$scope.bugs.push(newBug);
+			};
+
+			$scope.toggleBug = function(bug){
+				bug.isClosed = !bug.isClosed;
+			};
+		})
+	</script>
 </head>
-<body>
+<body ng-app="bugTrackerApp">
 	<h1>Bug Tracker</h1>
 	<hr>
-	<section class="stats">
-		<span class="closed">2</span>
-		<span> / </span>
-		<span>5</span>
-	</section>
-	<section class="search">
-		<label for="">Search :</label>
-		<input type="text" name="" id="">
-		<label for=""> Closed :?</label>
-		<input type="checkbox" name="" id="">
-		<input type="button" value="Show All">
-	</section>
-	<section class="sort">
-		<label for="">Order By :</label>
-		<input type="text" name="" id="">
-		<label for="">Descending ? :</label>
-		<input type="checkbox" name="" id="">
-	</section>
-	<section class="list">
-		<label for="">Bug :</label>
-		<input type="text" name="" id="">
-		<input type="button" value="Add Bug">
-		<input type="button" value="Remove Clsoed">
-		<ol>
-			<li class="closed">Server communication failure</li>
-			<li>Data validation is buggy</li>
-		</ol>
-	</section>
+	<div ng-controller="bugsController">
+		<section class="stats">
+			<span class="closed">2</span>
+			<span> / </span>
+			<span>{{bugs.length}}</span>
+		</section>
+		<section class="search">
+			<label for="">Search :</label>
+			<input type="text" name="" id="">
+			<label for=""> Closed :?</label>
+			<input type="checkbox" name="" id="">
+			<input type="button" value="Show All">
+		</section>
+		<section class="sort">
+			<label for="">Order By :</label>
+			<input type="text" name="" id="">
+			<label for="">Descending ? :</label>
+			<input type="checkbox" name="" id="">
+		</section>
+		<section class="list">
+			<label for="">Bug :</label>
+			<input type="text" ng-model="newBugName">
+			<input type="button" value="Add Bug" ng-click="addNew(newBugName)">
+			<input type="button" value="Remove Clsoed">
+			<ol>
+				<li ng-repeat="bug in bugs track by $index" ng-click="toggleBug(bug)">{{bug}}</li>
+			</ol>
+		</section>
+	</div>
 </body>
 </html>
