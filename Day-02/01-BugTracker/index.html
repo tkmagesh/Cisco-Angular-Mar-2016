@@ -90,6 +90,7 @@
 					dataAsString = storage.getItem(key),
 					dataObj = angular.fromJson(dataAsString),
 					bug = new Bug(dataObj);
+				maxBugId = maxBugId > bug.id ? maxBugId : bug.id;
 				$scope.bugs.push(bug);
 			}
 			
