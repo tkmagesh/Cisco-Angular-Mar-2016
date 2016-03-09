@@ -108,7 +108,9 @@
 			
 			$scope.addNew = function(newBug){
 				var bug = new Bug({name : newBug});
-				
+				bugService.addNew(bug).then(function(newBug){
+					$scope.bugs.push(newBug);
+				});
 			};
 
 			$scope.toggleBug = function(bug){
