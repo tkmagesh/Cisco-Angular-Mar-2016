@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Providers demo</title>
+	<script src="angular.min.js"></script>
+	<script src="awesomeLibrary.js"></script>
+	<script>
+		var myApp = angular.module("myApp", ["awesomeLibrary"]);
+
+		myApp.config(function(greeterProvider){
+			console.log('app in config phase');
+			greeterProvider.setMessage('Have a fabulous day!');
+		});
+
+		myApp.run(function(greeter){
+			console.log('app in init phase');
+			console.log('greeter -> ', greeter);
+			greeter.name = 'Magesh';
+			greeter.greet();
+			console.log(greeter.greetMsg);
+		});
+
+	</script>
+</head>
+<body ng-app="myApp">
+	
+</body>
+</html>

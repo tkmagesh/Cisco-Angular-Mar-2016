@@ -119,6 +119,7 @@
 			}
 
 			return {
+				count  : 0,
 				getAll : getAllBugs,
 				addNew : addNewBug,
 				save : saveBug,
@@ -127,6 +128,8 @@
 		});
 
 		bugTrackerApp.service('bugsCollection', function(bugStorage){
+			++bugStorage.count;
+			console.log('bugStorage.count = ', bugStorage.count);
 			this.list = bugStorage.getAll();
 
 			this.addNew = function(newBugName){
@@ -149,7 +152,11 @@
 			}
 		})		
 
-		bugTrackerApp.controller("bugsController", function($scope, bugsCollection){
+		bugTrackerApp.controller("bugsController", function($scope, bugsCollection, bugStorage){
+			++bugStorage.count;
+			console.log('bugStorage.count = ', bugStorage.count);
+
+
 			$scope.bugsCollection = bugsCollection;
 
 			$scope.newBugName = '';
@@ -160,7 +167,7 @@
 		});
 
 
-		bugTrackerApp.filter('toClosedCount', function($filter){
+		bugTrackerApp.filter('toClosedCount', function($filter, bugStorage){
 			/*return function(bugs){
 				var result = 0;
 				for(var i=0; i<bugs.length; i++)
@@ -168,11 +175,13 @@
 						++result;
 				return result;
 			}*/
+			++bugStorage.count;
+			console.log('bugStorage.count = ', bugStorage.count);
 			var builtinFilterFilter = $filter('filter');
 			return function(bugs){
 				return builtinFilterFilter(bugs, {isClosed : true}).length;
 			}  
-		})
+		});
 
 		
 	</script>
