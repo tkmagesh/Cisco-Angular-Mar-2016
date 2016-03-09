@@ -80,36 +80,24 @@
 
 
 		bugTrackerApp.controller("bugsController", function($scope, Bug){
-			var maxBugId = 0,
-				storage = window.localStorage;
+			var maxBugId = 0;
 
 			$scope.bugs = [];
 
-			for(var i=0; i<storage.length; i++){
-				var key = storage.key(i),
-					dataAsString = storage.getItem(key),
-					dataObj = angular.fromJson(dataAsString),
-					bug = new Bug(dataObj);
-				maxBugId = maxBugId > bug.id ? maxBugId : bug.id;
-				$scope.bugs.push(bug);
-			}
 			
 			$scope.addNew = function(newBug){
 				var bug = new Bug({id : ++maxBugId, name : newBug});
-				storage.setItem(bug.id, angular.toJson(bug));
 				$scope.bugs.push(bug);
 			};
 
 			$scope.toggleBug = function(bug){
 				
 				bug.toggle();
-				storage.setItem(bug.id, angular.toJson(bug));
 			};
 
 			$scope.removeClosed = function(){
 				for(var i=$scope.bugs.length-1; i>=0; i--)
 					if ($scope.bugs[i].isClosed){
-						storage.removeItem(bug.id);
 						$scope.bugs.splice(i,1);
 					}
 			};
@@ -118,13 +106,6 @@
 		});
 
 		bugTrackerApp.filter('toClosedCount', function($filter){
-			/*return function(bugs){
-				var result = 0;
-				for(var i=0; i<bugs.length; i++)
-					if (bugs[i].isClosed)
-						++result;
-				return result;
-			}*/
 			var builtinFilterFilter = $filter('filter');
 			return function(bugs){
 				return builtinFilterFilter(bugs, {isClosed : true}).length;
