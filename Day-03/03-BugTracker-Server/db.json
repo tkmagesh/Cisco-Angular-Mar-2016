@@ -11,6 +11,12 @@
       "name": "User actions not registered",
       "isClosed": false,
       "createdAt": "2016-03-08T18:50:59.386Z"
+    },
+    {
+      "id": 4,
+      "name": "Testing the server communication",
+      "isClosed": false,
+      "createdAt": "2016-03-09T06:39:26.471Z"
     }
   ]
 }
