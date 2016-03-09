@@ -1,0 +1,16 @@
+{
+  "bugs": [
+    {
+      "id": 1,
+      "name": "Server communication failure",
+      "isClosed": false,
+      "createdAt": "2016-02-28T18:50:59.386Z"
+    },
+    {
+      "id": 2,
+      "name": "User actions not registered",
+      "isClosed": false,
+      "createdAt": "2016-03-08T18:50:59.386Z"
+    }
+  ]
+}
