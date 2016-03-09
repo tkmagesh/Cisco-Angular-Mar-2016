@@ -1,0 +1,20 @@
+package.json
+	- manifest file
+		name, version, repository, author, liscence, dependencies, devDependencies
+
+- Jasmine
+	Test framework
+		constructs for writing test code (describe, it)
+		asserting api (expect)
+		typeof assertions (matchers)
+		spy (mocking)
+
+- Karma
+	test runner
+
+- Bower
+	client side dependency management tool
+
+- Protractor
+	an extension (angular specific) to selenium webdriver
+	simlating end user actions
